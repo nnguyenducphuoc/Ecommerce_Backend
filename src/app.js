@@ -18,7 +18,6 @@ app.use(compression());
 require("./databases/init.mongodb.js");
 //checkOverLoad();
 // init routes
-
+app.use("/", require("./routers"));
 // handling error
-
 module.exports = app;
