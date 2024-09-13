@@ -26,4 +26,4 @@ var keyTokenSchema = new Schema(
 );
 
 //Export the model
-module.exports = model(DOCUMENT_NAME, userSchema);
+module.exports = model(DOCUMENT_NAME, keyTokenSchema);
