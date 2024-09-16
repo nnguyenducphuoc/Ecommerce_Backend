@@ -2,6 +2,7 @@ const shopModel = require("../models/shop.model.");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const KeyTokenService = require("./keyToken.service");
+const { createTokenPair } = require("../auth/authUtils");
 
 const roleShop = {
   SHOP: "SHOP",
@@ -37,6 +38,14 @@ class AccessService {
         // dung thuat toan bat doi xung rsa
         const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
           modulusLength: 4096,
+          publicKeyEncoding: {
+            type: "pkcs1", // Public key Cryptographic Standards 1
+            format: "pem", //
+          },
+          privateKeyEncoding: {
+            type: "pkcs1", // Public key Cryptographic Standards 1
+            format: "pem", //
+          },
         });
 
         console.log({ privateKey, publicKey }); // save collection keystore
@@ -50,7 +59,28 @@ class AccessService {
             message: "publicKeyString error",
           };
         }
+        console.log(`publicKeyString::`, publicKeyString);
+        const publicKeyObject = crypto.createPublicKey(publicKeyString);
+        console.log(`publicKeyObject::`, publicKeyObject);
+        // create token pair
+        const tokens = await createTokenPair(
+          { userId: newShop._id, email },
+          publicKeyObject,
+          privateKey
+        );
+        console.log(`created token success:: `, tokens);
+        return {
+          code: 201,
+          metadata: {
+            shop: newShop,
+            tokens,
+          },
+        };
       }
+      return {
+        code: 200,
+        metadata: null,
+      };
     } catch (error) {
       return {
         code: "xxx",

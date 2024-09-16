@@ -1,3 +1,9 @@
 @url_dev=http://localhost:3056/v1/api/
 //signUp
 POST {{url_dev}}/shop/signup
+Content-Type: application/json
+{
+    "name": "Shop Yassa",
+    "email": "shop@yassa.com",
+    "password": "abc123"
+}
