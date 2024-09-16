@@ -1,14 +1,15 @@
 const keyTokenModel = require("../models/keytoken.model");
 
 class KeyTokenService {
-  static createKeyToken = async ({ userId, publicKey }) => {
+  static createKeyToken = async ({ userId, publicKey, privateKey }) => {
     try {
       // publicKey sinh ra tu thuat toan rsa, no la buffer, chua dc hash, phai duc ve string roi moi
       // luu vao database de ko bi loi
-      const publicKeyString = publicKey.toString();
+      // const publicKeyString = publicKey.toString();
       const tokens = await keyTokenModel.create({
         user: userId,
-        publicKey: publicKeyString,
+        publicKey,
+        privateKey,
       });
 
       return tokens ? tokens.publicKey : null;
