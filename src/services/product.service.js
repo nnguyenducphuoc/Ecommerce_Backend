@@ -7,19 +7,19 @@ class ProductFactory {
     type: "Clothing",
     payload
     */
-  static async createProduct({ type, payload }) {
+  static async createProduct(type, payload) {
     switch (type) {
       case "Electronic":
-        return new Electronic(payload);
+        return new Electronic(payload).createProduct();
       case "Clothing":
-        return new Clothing(payload);
+        return new Clothing(payload).createProduct();
       default:
-        throw new BadResquestError(`Invalid product type ${type}`);
+        throw new BadRequestError(`Invalid product type ${type}`);
     }
   }
 }
 
-// defin base product class
+// define base product class
 class Product {
   constructor({
     product_name,

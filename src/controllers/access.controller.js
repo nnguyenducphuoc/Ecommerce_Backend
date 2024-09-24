@@ -2,6 +2,7 @@ const { CREATED, SuccessResponse } = require("../core/success.response");
 const AccessService = require("../services/access.service");
 
 class AccessController {
+  // v1
   // handlerRefreshToken = async (req, res, next) => {
   //   new SuccessResponse({
   //     message: "Get tokens successfully",
@@ -9,11 +10,15 @@ class AccessController {
   //   }).send(res);
   // };
 
-  // v2: no need AT (chua)
+  // v2: no need AT
   handlerRefreshToken = async (req, res, next) => {
     new SuccessResponse({
       message: "Get tokens successfully",
-      metadata: await AccessService.handlerRefreshToken(req.body.refreshToken),
+      metadata: await AccessService.handlerRefreshTokenV2({
+        refreshToken: req.refreshToken,
+        user: req.user,
+        keyStore: req.keyStore,
+      }),
     }).send(res);
   };
 
