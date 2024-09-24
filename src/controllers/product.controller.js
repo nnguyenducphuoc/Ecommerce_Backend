@@ -1,15 +1,7 @@
-const { CREATED, SuccessResponse } = require("../core/success.response");
-const AccessService = require("../services/access.service");
+const { SuccessResponse } = require("../core/success.response");
+const ProductService = require("../services/product.service");
 
-class AccessController {
-  // handlerRefreshToken = async (req, res, next) => {
-  //   new SuccessResponse({
-  //     message: "Get tokens successfully",
-  //     metadata: await AccessService.handlerRefreshToken(req.body.refreshToken),
-  //   }).send(res);
-  // };
-
-  // v2: no need AT (chua)
+class ProductController {
   handlerRefreshToken = async (req, res, next) => {
     new SuccessResponse({
       message: "Get tokens successfully",
@@ -54,4 +46,4 @@ class AccessController {
   };
 }
 
-module.exports = new AccessController();
+module.exports = new ProductController();
