@@ -8,6 +8,11 @@ const {
 const {
   Types: { ObjectId },
 } = require("mongoose");
+const {
+  findAllDraftsForShop,
+  publishProductByShop,
+  findAllPublishedForShop,
+} = require("../repository/product.repo");
 // define Factory class create product
 class ProductFactory {
   /*
@@ -37,9 +42,24 @@ class ProductFactory {
     // }
   }
 
-  // query///
+  // PUT
+  static async publishProductByShop({ product_shop, product_id }) {
+    return await publishProductByShop({
+      product_shop,
+      product_id,
+    });
+  }
+
+  // query drafts///
   static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
     const query = { product_shop, isDraft: true };
+    return await findAllDraftsForShop({ query, limit, skip });
+  }
+
+  // query publish///
+  static async findAllPublishedForShop({ product_shop, limit = 50, skip = 0 }) {
+    const query = { product_shop, isPublished: true };
+    return await findAllPublishedForShop({ query, limit, skip });
   }
 }
 
